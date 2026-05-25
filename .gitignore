@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.vscode/
+.idea/
+
+*.png
+*.csv
+*.log
+
+results/
+HAOA/results/
+
+.env
+
