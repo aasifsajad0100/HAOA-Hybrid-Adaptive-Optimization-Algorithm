@@ -2,6 +2,7 @@ import time
 
 from experiments.benchmark_manager import BenchmarkManager
 from experiments.csv_exporter import CSVExporter
+from experiments.plot_generator import PlotGenerator
 
 from algorithm.haoa import HAOA
 
@@ -157,6 +158,20 @@ csv_exporter.export_summary(
 )
 
 csv_exporter.export_convergence(
+    all_results
+)
+
+# -------------------------------------------------
+# Generate plots
+# -------------------------------------------------
+
+plot_generator = PlotGenerator()
+
+plot_generator.generate_convergence_plot(
+    all_results
+)
+
+plot_generator.generate_score_plot(
     all_results
 )
 
