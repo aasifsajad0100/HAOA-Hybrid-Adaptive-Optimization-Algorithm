@@ -1,127 +1,84 @@
 import os
 import matplotlib.pyplot as plt
 
+
 class PlotGenerator:
 
-```
-def __init__(self):
+    def __init__(self):
 
-    self.output_path = "graphs"
+        self.output_directory = "results/figures"
 
-    os.makedirs(
-        self.output_path,
-        exist_ok=True
-    )
+        os.makedirs(self.output_directory, exist_ok=True)
 
-# -------------------------------------------------
-# Convergence plot
-# -------------------------------------------------
+    def generate_convergence_plot(self, all_results):
 
-def generate_convergence_plot(
-    self,
-    all_results
-):
+        plt.figure(figsize=(10, 6))
 
-    plt.figure(figsize=(10, 6))
+        for result in all_results:
 
-    for result in all_results:
+            plt.plot(
+                result["convergence_curve"],
+                label=result["benchmark"]
+            )
 
-        plt.plot(
+        plt.xlabel("Iteration")
 
-            result["convergence_curve"],
+        plt.ylabel("Best Score")
 
-            label=result["benchmark"]
+        plt.title("HAOA Convergence Curves")
+
+        plt.legend()
+
+        plt.grid(True)
+
+        file_path = os.path.join(
+            self.output_directory,
+            "convergence_plot.png"
         )
 
-    plt.title(
-        "HAOA Convergence Curves"
-    )
+        plt.savefig(file_path)
 
-    plt.xlabel("Iteration")
+        plt.close()
 
-    plt.ylabel("Best Score")
+        print(f"Saved: {file_path}")
 
-    plt.legend()
+    def generate_score_plot(self, all_results):
 
-    plt.grid(True)
+        benchmark_names = []
+        benchmark_scores = []
 
-    file_path = os.path.join(
+        for result in all_results:
 
-        self.output_path,
+            benchmark_names.append(
+                result["benchmark"]
+            )
 
-        "convergence_plot.png"
-    )
+            benchmark_scores.append(
+                result["best_score"]
+            )
 
-    plt.savefig(
-        file_path,
-        dpi=300,
-        bbox_inches="tight"
-    )
+        plt.figure(figsize=(10, 6))
 
-    plt.close()
+        plt.bar(
+            benchmark_names,
+            benchmark_scores
+        )
 
-    print(
-        f"Convergence plot saved: "
-        f"{file_path}"
-    )
+        plt.xlabel("Benchmark")
 
-# -------------------------------------------------
-# Benchmark comparison bar chart
-# -------------------------------------------------
+        plt.ylabel("Best Score")
 
-def generate_score_plot(
-    self,
-    all_results
-):
+        plt.title("HAOA Benchmark Performance")
 
-    benchmarks = [
+        plt.grid(True)
 
-        result["benchmark"]
+        file_path = os.path.join(
+            self.output_directory,
+            "score_plot.png"
+        )
 
-        for result in all_results
-    ]
+        plt.savefig(file_path)
 
-    scores = [
+        plt.close()
 
-        result["best_score"]
-
-        for result in all_results
-    ]
-
-    plt.figure(figsize=(10, 6))
-
-    plt.bar(
-        benchmarks,
-        scores
-    )
-
-    plt.title(
-        "HAOA Benchmark Performance"
-    )
-
-    plt.xlabel("Benchmark")
-
-    plt.ylabel("Best Score")
-
-    plt.grid(True)
-
-    file_path = os.path.join(
-
-        self.output_path,
-
-        "benchmark_scores.png"
-    )
-
-    plt.savefig(
-        file_path,
-        dpi=300,
-        bbox_inches="tight"
-    )
-
-    plt.close()
-
-    print(
-        f"Score plot saved: "
-        f"{file_path}"
-    )
-```
+        print(f"Saved: {file_path}")
